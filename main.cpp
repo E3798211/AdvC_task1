@@ -1,23 +1,21 @@
 
 #include <iostream>
-#include "counting_int.h"
-
 #include <SFML/Graphics.hpp>
 
-#include <algorithm>
-#include <vector>
+#include "counting_int.h"
 
 int main()
 {
-    // std::vector<CountingInt> v = { 5, 3, 4, 7, 2, 1, 6, 4, 3 };
-    std::vector<CountingInt> v = { 9,8,7,6,5,4,3,2,1 };
-    std::sort(v.begin(), v.end());
-    int cmp = 0;
-    int assign = 0;
-    for (auto &a : v) {
-        cmp += a.times_compared_against();
-        assign += a.times_assigned();
+    sf::RenderWindow window(sf::VideoMode(800, 600), "My window");
+    
+    while (window.isOpen()) {
+        sf::Event e;
+        while (window.pollEvent(e))
+            if (e.type == sf::Event::Closed)
+                window.close();
+
+        window.clear();
+        window.display();
     }
-    std::cout << cmp << " " << assign << "\n";
 }
 
