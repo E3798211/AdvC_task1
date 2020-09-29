@@ -1,10 +1,20 @@
 
 #include "win_manager.h"
+
 #include <iostream>
 
-static void inc(WinManager *wm) {
+// Need explicit instantiation here...
+template void sorts::bubble(std::vector<CountingInt>&);
+void setBubblesort(WinManager *wm) noexcept {
     if (wm) {
-        wm->value++;
+        wm->sort = sorts::bubble<CountingInt>;
+    }
+}
+
+template void sorts::stdsort(std::vector<CountingInt>&);
+void setStdsort(WinManager *wm) noexcept {
+    if (wm) {
+        wm->sort = sorts::stdsort<CountingInt>;
     }
 }
 
@@ -19,15 +29,10 @@ WinManager::WinManager(int width, int height, const std::string &name)
     
     b.setText("Hello", font);
     b.move(40, 40);
-    b.setOnPress(inc);
+    b.setOnPress(setBubblesort);
 }
 
 bool WinManager::run() noexcept {
-
-
-    value = 0;
-
-
     while (window.isOpen()) {
         sf::Event e;
         while (window.pollEvent(e)) {
@@ -37,8 +42,9 @@ bool WinManager::run() noexcept {
             }
             if (e.type == sf::Event::MouseButtonPressed) {
                 if (isButtonPressed(b, sf::Mouse::getPosition(window))) {
+                    std::cout << "old value = " << (void*)sort << "\n";
                     b.doPressAction(this);
-                    std::cout << "new value = " << value << "\n";
+                    std::cout << "new value = " << (void*)sort << "\n";
                 }
             }
         }
@@ -46,6 +52,8 @@ bool WinManager::run() noexcept {
         window.clear(sf::Color::Red);
         window.draw(b);
         window.display();
+
+        sort = nullptr;
     }
     return false;
 }
