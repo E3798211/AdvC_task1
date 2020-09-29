@@ -1,3 +1,5 @@
 *.o
 a.out
 gmon.out
+.depend
+main

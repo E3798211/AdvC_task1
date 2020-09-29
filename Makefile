@@ -4,9 +4,9 @@ CC  := $(CXX)
 CXXFLAGS := -Wall -Wextra -Wpedantic -std=c++11
 LDLIBS := -lsfml-graphics -lsfml-window -lsfml-system
 
-src := main.cpp
+src := main.cpp win_manager.cpp
 obj := $(patsubst %.cpp,%.o,$(src))
-exec := main
+bin := main
 
 all: debug
 
@@ -15,16 +15,16 @@ dep := .depend
 $(dep): $(src)
 	$(CXX) -MM $^ > $@
 
-release debug: $(exec)
+release debug: $(bin)
 
 debug: CFLAGS += -pg -g
 release: CFLAGS += -O2 -DNDEBUG
 
-$(exec): $(obj)
+$(bin): $(obj)
 
 .PHONY: clean
 clean:
-	$(RM) $(exec)
+	$(RM) $(bin)
 	$(RM) $(obj)
 	$(RM) gmon.out
 	$(RM) $(dep)
