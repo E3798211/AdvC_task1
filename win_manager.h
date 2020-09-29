@@ -13,7 +13,9 @@ private:
 
     sf::Font font;
     Button b;
+
 public:
+    int value;
     explicit WinManager(int width, int height, const std::string &name);
 
     /* Returns whether user has closed the window himself */

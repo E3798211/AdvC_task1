@@ -2,6 +2,12 @@
 #include "win_manager.h"
 #include <iostream>
 
+static void inc(WinManager *wm) {
+    if (wm) {
+        wm->value++;
+    }
+}
+
 WinManager::WinManager(int width, int height, const std::string &name)
     : window(sf::VideoMode(width, height), name)
 {
@@ -13,9 +19,15 @@ WinManager::WinManager(int width, int height, const std::string &name)
     
     b.setText("Hello", font);
     b.move(40, 40);
+    b.setOnPress(inc);
 }
 
 bool WinManager::run() noexcept {
+
+
+    value = 0;
+
+
     while (window.isOpen()) {
         sf::Event e;
         while (window.pollEvent(e)) {
@@ -25,7 +37,8 @@ bool WinManager::run() noexcept {
             }
             if (e.type == sf::Event::MouseButtonPressed) {
                 if (isButtonPressed(b, sf::Mouse::getPosition(window))) {
-                    std::cout << "HOOOO!\n";
+                    b.doPressAction(this);
+                    std::cout << "new value = " << value << "\n";
                 }
             }
         }
