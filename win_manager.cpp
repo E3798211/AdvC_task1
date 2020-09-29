@@ -18,11 +18,17 @@ WinManager::WinManager(int width, int height, const std::string &name)
 bool WinManager::run() noexcept {
     while (window.isOpen()) {
         sf::Event e;
-        while (window.pollEvent(e))
+        while (window.pollEvent(e)) {
             if (e.type == sf::Event::Closed) {
                 window.close();
                 return true;
             }
+            if (e.type == sf::Event::MouseButtonPressed) {
+                if (isButtonPressed(b, sf::Mouse::getPosition(window))) {
+                    std::cout << "HOOOO!\n";
+                }
+            }
+        }
 
         window.clear(sf::Color::Red);
         window.draw(b);

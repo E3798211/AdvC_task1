@@ -37,7 +37,11 @@ public:
         text.setString(name);
         text.setFont(font);
     }
+
+    friend bool isButtonPressed(const Button &b, const sf::Vector2i &cursor);
 };
+
+bool isButtonPressed(const Button &b, const sf::Vector2i &cursor);
 
 #endif // BUTTON_H_INCLUDED
 

@@ -4,7 +4,7 @@ CC  := $(CXX)
 CXXFLAGS := -Wall -Wextra -Wpedantic -std=c++11
 LDLIBS := -lsfml-graphics -lsfml-window -lsfml-system
 
-src := main.cpp win_manager.cpp
+src := main.cpp win_manager.cpp button.cpp
 obj := $(patsubst %.cpp,%.o,$(src))
 bin := main
 
