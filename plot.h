@@ -18,6 +18,7 @@ public:
     }
     void putPoints(const std::vector<sf::Vector2i> points,
                    const sf::Color &c = sf::Color::White) noexcept;
+    void clear() noexcept;
 };
 
 #endif // PLOT_H_INCLUDED

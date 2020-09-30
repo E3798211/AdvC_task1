@@ -29,3 +29,13 @@ void Plot::putPoints(const std::vector<sf::Vector2i> points,
     texture.update(image);
 }
 
+void Plot::clear() noexcept {
+    sf::Vector2u size = image.getSize();
+
+    sf::Image tmp;
+    tmp.create(size.x, size.y);
+    image.copy(tmp, 0, 0);
+
+    texture.update(image);
+}
+

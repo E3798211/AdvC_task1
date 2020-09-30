@@ -27,6 +27,7 @@ private:
         BUTTON_FILL_RANDOM,
 
         BUTTON_START_SORT,
+        BUTTON_CLEAR,
 
         NBUTTONS
     };
@@ -45,6 +46,7 @@ private:
     static void setFillDescending(WinManager *wm) noexcept;
     static void setFillRandom(WinManager *wm) noexcept;
     static void setStartSort(WinManager *wm) noexcept;
+    static void setClear(WinManager *wm) noexcept;
 
     /* Helpers */
     void processMouseKeyPress() noexcept;

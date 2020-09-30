@@ -45,6 +45,13 @@ void WinManager::setStartSort(WinManager *wm) noexcept {
     //
 }
 
+void WinManager::setClear(WinManager *wm) noexcept {
+    if (wm) {
+        wm->assignments.clear();
+        wm->comparisons.clear();
+    }
+}
+
 /*
  * WinManager implementation
  */
@@ -83,6 +90,10 @@ WinManager::WinManager(int width, int height, const std::string &name)
     buttons[BUTTON_START_SORT].setText("Start", font);
     buttons[BUTTON_START_SORT].move(40.0, 300.0);
     buttons[BUTTON_START_SORT].setOnPress(setStartSort);
+
+    buttons[BUTTON_CLEAR].setText("Clear", font);
+    buttons[BUTTON_CLEAR].move(40.0, 350.0);
+    buttons[BUTTON_CLEAR].setOnPress(setClear);
 
     assignments.move(230.0, 50.0);
     comparisons.move(500.0, 50.0);
