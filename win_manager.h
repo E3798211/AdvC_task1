@@ -13,11 +13,20 @@ class WinManager
 {
 private:
     sf::RenderWindow window;
-
     sf::Font font;
-    Button b;
+
+    enum
+    {
+        BUTTON_SET_BUBBLESORT,
+        BUTTON_SET_STDSORT,
+        NBUTTONS
+    };
+    Button buttons[NBUTTONS];
 
     sorts::sort_t<CountingInt> sort;
+
+
+    void processMouseKeyPress() noexcept;
 public:
     explicit WinManager(int width, int height, const std::string &name);
 

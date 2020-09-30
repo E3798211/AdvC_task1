@@ -27,9 +27,20 @@ WinManager::WinManager(int width, int height, const std::string &name)
         return;
     }
     
-    b.setText("Hello", font);
-    b.move(40, 40);
-    b.setOnPress(setBubblesort);
+    buttons[BUTTON_SET_BUBBLESORT].setText("Bubblesort", font);
+    buttons[BUTTON_SET_BUBBLESORT].move(40.0, 50.0);
+    buttons[BUTTON_SET_BUBBLESORT].setOnPress(setBubblesort);
+
+    buttons[BUTTON_SET_STDSORT].setText("Stdsort", font);
+    buttons[BUTTON_SET_STDSORT].move(40.0, 100.0);
+    buttons[BUTTON_SET_STDSORT].setOnPress(setStdsort);
+}
+
+void WinManager::processMouseKeyPress() noexcept {
+    sf::Vector2i cursor = sf::Mouse::getPosition(window);
+    for (auto &b : buttons)
+        if (isButtonPressed(b, cursor))
+            b.doPressAction(this);
 }
 
 bool WinManager::run() noexcept {
@@ -41,21 +52,16 @@ bool WinManager::run() noexcept {
                 return true;
             }
             if (e.type == sf::Event::MouseButtonPressed) {
-                if (isButtonPressed(b, sf::Mouse::getPosition(window))) {
-                    std::cout << "old value = " << (void*)sort << "\n";
-                    b.doPressAction(this);
-                    std::cout << "new value = " << (void*)sort << "\n";
-                }
+                processMouseKeyPress();
+                std::cout << "sort = " << (void *)sort << "\n";
             }
         }
 
         window.clear(sf::Color::Red);
-        window.draw(b);
+        for (int i = 0; i < NBUTTONS; i++)
+            window.draw(buttons[i]);
         window.display();
-
-        sort = nullptr;
     }
     return false;
 }
-
 

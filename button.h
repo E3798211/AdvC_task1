@@ -31,7 +31,7 @@ public:
         , on_press      (nullptr)
     {
         setFillColor(sf::Color::Magenta);
-        text.move(10.0, 0.0);
+        text.move(10.0, 5.0);
     }
     explicit Button(const std::string& name, const sf::Font &font) noexcept
         : Button()
@@ -39,9 +39,11 @@ public:
         setText(name, font);
     }
 
-    void setText(const std::string& name, const sf::Font &font) noexcept {
+    void setText(const std::string& name, const sf::Font &font,
+                 unsigned int charSize = 20) noexcept {
         text.setString(name);
         text.setFont(font);
+        text.setCharacterSize(charSize);
     }
 
     // Returns previous value
