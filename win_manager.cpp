@@ -1,6 +1,8 @@
 
 #include "win_manager.h"
 
+#include <numeric>
+#include <cstdlib>
 #include <iostream>
 
 /*
@@ -40,9 +42,66 @@ void WinManager::setFillRandom(WinManager *wm) noexcept {
     }
 }
 
+bool WinManager::fillArray(std::vector<CountingInt> &arr) const noexcept {
+    int size = arr.size();
+
+    switch (fill_type) {
+        case FillType::ASCENDING:
+            std::iota(arr.begin(), arr.end(), 0);
+            break;
+        case FillType::DESCENDING:
+            std::iota(arr.rbegin(), arr.rend(), 0);
+            break;
+        case FillType::RANDOM:
+            
+            std::generate(arr.begin(), arr.end(),
+                          [size]()->CountingInt { return std::rand() % size; }
+                         );
+            break;
+        default:
+            std::cout << "Unknown fill_type = "
+                      << static_cast<int>(fill_type) << "\n";
+            return false;
+    }
+    return true;
+}
+
 void WinManager::setStartSort(WinManager *wm) noexcept {
     if (wm) {
-        std::cout << "Not implemented\n";
+        std::vector<sf::Vector2i> res_cmp;
+        std::vector<sf::Vector2i> res_ass;
+
+        /* Sorry for that... */
+        std::vector<int> arr_sizes(100);
+        const int step = 10;
+        int cursize = step;
+        for (size_t i = 0; i < arr_sizes.size(); i++) {
+            arr_sizes[i] = cursize;
+            cursize += step;
+        }
+
+        for (int size : arr_sizes) {
+            std::vector<CountingInt> base(size);
+            wm->fillArray(base);
+
+            /* Main action */
+            wm->sort(base);
+
+            /* Gathering stats */
+            int ncmp = 0;
+            int nass = 0;
+            for (auto &i : base) {
+                ncmp += i.times_compared_against();
+                nass += i.times_assigned();
+            }
+            
+            res_cmp.push_back({ size, ncmp });
+            res_ass.push_back({ size, nass });
+        }
+
+        /* Printing */
+        wm->assignments.putPoints(res_ass);
+        wm->comparisons.putPoints(res_cmp);
     }
 }
 
@@ -62,6 +121,7 @@ WinManager::WinManager(int width, int height, const std::string &name)
     , assignments   (sf::Vector2u(250, 500))
     , comparisons   (sf::Vector2u(250, 500))
     , fill_type     (FillType::DESCENDING)
+    , sort          (sorts::bubble)
 {
     // TODO: fix error recovery
     if (!font.loadFromFile("UbuntuMono-B.ttf")) {

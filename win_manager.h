@@ -58,6 +58,8 @@ private:
 
     /* Helpers */
     void processMouseKeyPress() noexcept;
+    /* Returns whether the call was successful */
+    bool fillArray(std::vector<CountingInt> &arr) const noexcept;
 
 public:
     explicit WinManager(int width, int height, const std::string &name);

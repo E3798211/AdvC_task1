@@ -7,19 +7,19 @@
 class CountingInt
 {
 private:
-    int storge;
+    int storage;
 
     mutable int n_compares;
     mutable int n_assignments;
 public:
     /* Not explicit */
     CountingInt(int def = 0) noexcept
-        : storge        (def)
+        : storage       (def)
         , n_compares    (0)
         , n_assignments (0)
     {}
     CountingInt(const CountingInt &rhs) noexcept
-        : storge        (rhs.storge)
+        : storage       (rhs.storage)
         , n_compares    (0)
         , n_assignments (0)
     {}
@@ -29,25 +29,25 @@ public:
     {}
 
     CountingInt& operator=(const CountingInt &rhs) noexcept {
-        storge = rhs.storge;
+        storage = rhs.storage;
         n_assignments++;
         return *this;
     }
     bool operator==(const CountingInt &rhs) const noexcept {
         n_compares++;
-        return storge == rhs.storge;
+        return storage == rhs.storage;
     }
     
     bool operator<(const CountingInt &rhs) const noexcept {
         n_compares++;
-        return storge < rhs.storge;
+        return storage < rhs.storage;
     }
 
     int operator++() noexcept {
-        return storge++;
+        return storage++;
     }
     int operator++(int) noexcept {
-        return ++storge;
+        return ++storage;
     }
 
     int times_compared_against() const noexcept {
@@ -57,9 +57,14 @@ public:
         return n_assignments;
     }
 
+    /* Risking to leave it not explicit */
+    operator int() const noexcept {
+        return storage;
+    }
+
     friend std::ostream& operator<<(std::ostream& os,
                                     const CountingInt &rhs) {
-        os << "(" << rhs.storge << " " << rhs.n_compares
+        os << "(" << rhs.storage << " " << rhs.n_compares
            << " " << rhs.n_assignments << ")";
         return os;
     }
