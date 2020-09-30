@@ -15,10 +15,10 @@ dep := .depend
 $(dep): $(src)
 	$(CXX) -MM $^ > $@
 
-release debug: $(bin)
+debug: CXXFLAGS += -pg -g
+release: CXXFLAGS += -O2 -DNDEBUG
 
-debug: CFLAGS += -pg -g
-release: CFLAGS += -O2 -DNDEBUG
+release debug: $(bin)
 
 $(bin): $(obj)
 
