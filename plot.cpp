@@ -21,6 +21,9 @@ void Plot::putPoints(const std::vector<sf::Vector2i> points,
         if (p.y > ymax) ymax = p.y;
         if (p.y < ymin) ymin = p.y;
     }
+    /* Weird dots... */
+    if (xmax == xmin || ymin == ymin)
+        return;
     /* Sorry, no anti-aliasing */
     sf::Vector2u size = image.getSize();
     for (auto &p : points) {
