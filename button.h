@@ -54,7 +54,8 @@ public:
     }
 
     void doPressAction(WinManager *wm) {
-        on_press(wm);
+        if (on_press)
+            on_press(wm);
     }
 
     friend bool isButtonPressed(const Button &b, const sf::Vector2i &cursor);

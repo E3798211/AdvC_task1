@@ -2,10 +2,6 @@
 #include <algorithm>
 #include "plot.h"
 
-void Plot::setLabel(const sf::Text &lbl) noexcept {
-    label = lbl;
-}
-
 /* Returns already rounded to int */
 static inline int norm_to(int xmax, int x, float lowbound, float highbound) {
     return xmax * (x - lowbound) / (highbound - lowbound);
@@ -13,6 +9,7 @@ static inline int norm_to(int xmax, int x, float lowbound, float highbound) {
 
 void Plot::putPoints(const std::vector<sf::Vector2i> points,
                 const sf::Color &c) noexcept {
+    /* 100k is ok for now... */
     float xmax = -1, xmin = 100000;
     float ymax = -1, ymin = 100000;
     for (auto &p : points) {
@@ -22,9 +19,7 @@ void Plot::putPoints(const std::vector<sf::Vector2i> points,
         if (p.y < ymin) ymin = p.y;
     }
     /* Weird dots... */
-    if (xmin == xmax)
-        return;
-    if (ymin == ymax)
+    if (xmin == xmax || ymin == ymax)
         return;
     /* Sorry, no anti-aliasing */
     sf::Vector2u size = image.getSize();

@@ -244,6 +244,12 @@ bool WinManager::run() noexcept {
         /* Just some grey color */
         window.clear(sf::Color(120,120,120));
 
+        /*
+         * Not so nice but adding a function is not needed now.
+         * The other way to draw all is to use ABC called Widjet and
+         * try to inherit from it. Then here it will be just
+         *  for (widjets) draw();
+         */
         for (int i = 0; i < NBUTTONS; i++)
             window.draw(buttons[i]);
         window.draw(assignments);

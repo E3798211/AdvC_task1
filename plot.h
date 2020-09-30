@@ -27,11 +27,13 @@ public:
         setTexture(texture, true);
     }
 
-    void setLabel(const sf::Text &lbl) noexcept;
-
     void putPoints(const std::vector<sf::Vector2i> points,
                    const sf::Color &c = sf::Color::White) noexcept;
     void clear() noexcept;
+
+    void setLabel(const sf::Text &lbl) noexcept {
+        label = lbl;
+    }
 };
 
 #endif // PLOT_H_INCLUDED

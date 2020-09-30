@@ -1,10 +1,8 @@
 
 #include <iostream>
 #include <SFML/Graphics.hpp>
+
 #include "win_manager.h"
-
-#include "counting_int.h"
-
 
 int main()
 {

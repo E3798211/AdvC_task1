@@ -6,9 +6,9 @@
 #include <string>
 
 #include "button.h"
+#include "plot.h"
 #include "sort.hpp"
 #include "counting_int.h"
-#include "plot.h"
 
 class WinManager
 {
