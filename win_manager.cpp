@@ -23,7 +23,14 @@ void WinManager::setStdsort(WinManager *wm) noexcept {
 }
 
 void WinManager::setFillAscending(WinManager *wm) noexcept {
-    //
+    if (wm) {
+        std::vector<sf::Vector2i> points;
+        for (int i = 0; i < 100; i++) {
+            points.push_back({i, i*i});
+        }
+
+        wm->assignments.putPoints(points);
+    }
 }
 
 void WinManager::setFillDescending(WinManager *wm) noexcept {

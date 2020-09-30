@@ -22,10 +22,10 @@ void Plot::putPoints(const std::vector<sf::Vector2i> points,
     for (auto &p : points) {
         int x = norm_to(size.x, p.x, xmax, xmin);
         int y = norm_to(size.y, p.y, ymax, ymin);
-        image.setPixel(x, y, c);
+        // The (0,0) is in the right down corner
+        image.setPixel(size.x - x, y, c);
     }
 
     texture.update(image);
-    setTexture(texture, true);
 }
 

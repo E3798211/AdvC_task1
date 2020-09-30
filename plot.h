@@ -17,7 +17,7 @@ public:
         setTexture(texture, true);
     }
     void putPoints(const std::vector<sf::Vector2i> points,
-              const sf::Color &c) noexcept;
+                   const sf::Color &c = sf::Color::White) noexcept;
 };
 
 #endif // PLOT_H_INCLUDED
