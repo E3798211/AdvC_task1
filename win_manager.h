@@ -37,6 +37,14 @@ private:
     Plot comparisons;
 
     /* Non-drawble, implement inner logic */
+    enum class FillType
+    {
+        ASCENDING,
+        DESCENDING,
+        RANDOM
+    };
+    FillType    fill_type;
+
     sorts::sort_t<CountingInt> sort;
 
     /* Button callbacks */

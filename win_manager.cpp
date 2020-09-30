@@ -24,25 +24,26 @@ void WinManager::setStdsort(WinManager *wm) noexcept {
 
 void WinManager::setFillAscending(WinManager *wm) noexcept {
     if (wm) {
-        std::vector<sf::Vector2i> points;
-        for (int i = 0; i < 100; i++) {
-            points.push_back({i, i*i});
-        }
-
-        wm->assignments.putPoints(points);
+        wm->fill_type = FillType::ASCENDING;
     }
 }
 
 void WinManager::setFillDescending(WinManager *wm) noexcept {
-    //
+    if (wm) {
+        wm->fill_type = FillType::DESCENDING;
+    }
 }
 
 void WinManager::setFillRandom(WinManager *wm) noexcept {
-    //
+    if (wm) {
+        wm->fill_type = FillType::RANDOM;
+    }
 }
 
 void WinManager::setStartSort(WinManager *wm) noexcept {
-    //
+    if (wm) {
+        std::cout << "Not implemented\n";
+    }
 }
 
 void WinManager::setClear(WinManager *wm) noexcept {
@@ -60,6 +61,7 @@ WinManager::WinManager(int width, int height, const std::string &name)
     : window(sf::VideoMode(width, height), name)
     , assignments   (sf::Vector2u(250, 500))
     , comparisons   (sf::Vector2u(250, 500))
+    , fill_type     (FillType::DESCENDING)
 {
     // TODO: fix error recovery
     if (!font.loadFromFile("UbuntuMono-B.ttf")) {
@@ -114,17 +116,18 @@ bool WinManager::run() noexcept {
                 window.close();
                 return true;
             }
-            if (e.type == sf::Event::MouseButtonPressed) {
+            if (e.type == sf::Event::MouseButtonPressed)
                 processMouseKeyPress();
-                std::cout << "sort = " << (void *)sort << "\n";
-            }
         }
 
+        /* Just some grey color */
         window.clear(sf::Color(120,120,120));
+
         for (int i = 0; i < NBUTTONS; i++)
             window.draw(buttons[i]);
         window.draw(assignments);
         window.draw(comparisons);
+
         window.display();
     }
     return false;
