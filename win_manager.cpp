@@ -103,6 +103,10 @@ bool WinManager::fillArray(std::vector<CountingInt> &arr) const noexcept {
                       << static_cast<int>(fill_type) << "\n";
             return false;
     }
+    /* Resetting all the stats */
+    for (auto &i : arr)
+        i.reset();
+
     return true;
 }
 

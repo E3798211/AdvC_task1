@@ -56,6 +56,10 @@ public:
     int times_assigned() const noexcept {
         return n_assignments;
     }
+    void reset() noexcept {
+        n_assignments = 0;
+        n_compares = 0;
+    }
 
     /* Risking to leave it not explicit */
     operator int() const noexcept {
