@@ -15,6 +15,7 @@ class WinManager
 private:
     sf::RenderWindow window;
     sf::Font font;
+    sf::Text status;
 
     /* Drawable objects */
     enum
@@ -45,6 +46,17 @@ private:
     };
     FillType    fill_type;
 
+    enum class SortType
+    {
+        BUBBLE,
+        STDSORT
+    };
+    /*
+     * Just to track current func for status. Bad solution
+     * since it requires some kind of code duplication...
+     */
+    SortType    sort_type;  
+
     sorts::sort_t<CountingInt> sort;
 
     /* Button callbacks */
@@ -58,6 +70,9 @@ private:
 
     /* Helpers */
     void processMouseKeyPress() noexcept;
+    
+    void updateStatus() noexcept;
+
     /* Returns whether the call was successful */
     bool fillArray(std::vector<CountingInt> &arr) const noexcept;
 

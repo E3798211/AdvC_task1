@@ -9,11 +9,46 @@
  * Button actions
  */
 
+/* Quick and dirty */
+void WinManager::updateStatus() noexcept {
+    std::string new_status = "Status:\n";
+
+    switch (sort_type) {
+        case SortType::BUBBLE:
+            new_status += "bubblesort\n";
+            break;
+        case SortType::STDSORT:
+            new_status += "stdsort\n";
+            break;
+        default:
+            new_status += "unknown...\n";
+    }
+
+    switch (fill_type) {
+        case FillType::ASCENDING:
+            new_status += "ascending\n";
+            break;
+        case FillType::DESCENDING:
+            new_status += "descending\n";
+            break;
+        case FillType::RANDOM:
+            new_status += "random\n";
+            break;
+        default:
+            new_status += "unknown...\n";
+            break;
+    }
+
+    status.setString(new_status);
+}
+
 // Need explicit instantiation here...
 template void sorts::bubble(std::vector<CountingInt>&);
 void WinManager::setBubblesort(WinManager *wm) noexcept {
     if (wm) {
         wm->sort = sorts::bubble<CountingInt>;
+        wm->sort_type = SortType::BUBBLE;
+        wm->updateStatus();
     }
 }
 
@@ -21,24 +56,29 @@ template void sorts::stdsort(std::vector<CountingInt>&);
 void WinManager::setStdsort(WinManager *wm) noexcept {
     if (wm) {
         wm->sort = sorts::stdsort<CountingInt>;
+        wm->sort_type = SortType::STDSORT;
+        wm->updateStatus();
     }
 }
 
 void WinManager::setFillAscending(WinManager *wm) noexcept {
     if (wm) {
         wm->fill_type = FillType::ASCENDING;
+        wm->updateStatus();
     }
 }
 
 void WinManager::setFillDescending(WinManager *wm) noexcept {
     if (wm) {
         wm->fill_type = FillType::DESCENDING;
+        wm->updateStatus();
     }
 }
 
 void WinManager::setFillRandom(WinManager *wm) noexcept {
     if (wm) {
         wm->fill_type = FillType::RANDOM;
+        wm->updateStatus();
     }
 }
 
@@ -121,6 +161,7 @@ WinManager::WinManager(int width, int height, const std::string &name)
     , assignments   (sf::Vector2u(250, 500))
     , comparisons   (sf::Vector2u(250, 500))
     , fill_type     (FillType::DESCENDING)
+    , sort_type     (SortType::BUBBLE)
     , sort          (sorts::bubble)
 {
     // TODO: fix error recovery
@@ -128,7 +169,7 @@ WinManager::WinManager(int width, int height, const std::string &name)
         std::cout << "Wow!\n";
         return;
     }
-    
+
     buttons[BUTTON_SET_BUBBLESORT].setText("Bubblesort", font);
     buttons[BUTTON_SET_BUBBLESORT].move(40.0, 50.0);
     buttons[BUTTON_SET_BUBBLESORT].setOnPress(setBubblesort);
@@ -159,6 +200,12 @@ WinManager::WinManager(int width, int height, const std::string &name)
 
     assignments.move(230.0, 50.0);
     comparisons.move(500.0, 50.0);
+
+    status.setFont(font);
+    status.setCharacterSize(20);
+    status.move(40.0, 400.);
+
+    updateStatus();
 }
 
 void WinManager::processMouseKeyPress() noexcept {
@@ -187,6 +234,7 @@ bool WinManager::run() noexcept {
             window.draw(buttons[i]);
         window.draw(assignments);
         window.draw(comparisons);
+        window.draw(status);
 
         window.display();
     }
