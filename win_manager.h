@@ -19,6 +19,13 @@ private:
     {
         BUTTON_SET_BUBBLESORT,
         BUTTON_SET_STDSORT,
+
+        BUTTON_FILL_ASCENDING,
+        BUTTON_FILL_DESCENDING,
+        BUTTON_FILL_RANDOM,
+
+        BUTTON_START_SORT,
+
         NBUTTONS
     };
     Button buttons[NBUTTONS];
@@ -27,14 +34,20 @@ private:
 
 
     void processMouseKeyPress() noexcept;
+
+
+    /* Button callbacks */
+    static void setBubblesort(WinManager *wm) noexcept;
+    static void setStdsort(WinManager *wm) noexcept;
+    static void setFillAscending(WinManager *wm) noexcept;
+    static void setFillDescending(WinManager *wm) noexcept;
+    static void setFillRandom(WinManager *wm) noexcept;
+    static void setStartSort(WinManager *wm) noexcept;
 public:
     explicit WinManager(int width, int height, const std::string &name);
 
     /* Returns whether user has closed the window himself */
     bool run() noexcept;
-
-    friend void setBubblesort(WinManager *wm) noexcept;
-    friend void setStdsort(WinManager *wm) noexcept;
 };
 
 #endif // WIN_MANAGER_H_INCLUDED

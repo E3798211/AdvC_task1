@@ -3,20 +3,44 @@
 
 #include <iostream>
 
+/*
+ * Button actions
+ */
+
 // Need explicit instantiation here...
 template void sorts::bubble(std::vector<CountingInt>&);
-void setBubblesort(WinManager *wm) noexcept {
+void WinManager::setBubblesort(WinManager *wm) noexcept {
     if (wm) {
         wm->sort = sorts::bubble<CountingInt>;
     }
 }
 
 template void sorts::stdsort(std::vector<CountingInt>&);
-void setStdsort(WinManager *wm) noexcept {
+void WinManager::setStdsort(WinManager *wm) noexcept {
     if (wm) {
         wm->sort = sorts::stdsort<CountingInt>;
     }
 }
+
+void WinManager::setFillAscending(WinManager *wm) noexcept {
+    //
+}
+
+void WinManager::setFillDescending(WinManager *wm) noexcept {
+    //
+}
+
+void WinManager::setFillRandom(WinManager *wm) noexcept {
+    //
+}
+
+void WinManager::setStartSort(WinManager *wm) noexcept {
+    //
+}
+
+/*
+ * WinManager implementation
+ */
 
 WinManager::WinManager(int width, int height, const std::string &name)
     : window(sf::VideoMode(width, height), name)
@@ -34,6 +58,22 @@ WinManager::WinManager(int width, int height, const std::string &name)
     buttons[BUTTON_SET_STDSORT].setText("Stdsort", font);
     buttons[BUTTON_SET_STDSORT].move(40.0, 100.0);
     buttons[BUTTON_SET_STDSORT].setOnPress(setStdsort);
+
+    buttons[BUTTON_FILL_ASCENDING].setText("Fill up", font);
+    buttons[BUTTON_FILL_ASCENDING].move(40.0, 150.0);
+    buttons[BUTTON_FILL_ASCENDING].setOnPress(setFillAscending);
+
+    buttons[BUTTON_FILL_DESCENDING].setText("Fill down", font);
+    buttons[BUTTON_FILL_DESCENDING].move(40.0, 200.0);
+    buttons[BUTTON_FILL_DESCENDING].setOnPress(setFillDescending);
+
+    buttons[BUTTON_FILL_RANDOM].setText("Fill random", font);
+    buttons[BUTTON_FILL_RANDOM].move(40.0, 250.0);
+    buttons[BUTTON_FILL_RANDOM].setOnPress(setFillRandom);
+
+    buttons[BUTTON_START_SORT].setText("Start", font);
+    buttons[BUTTON_START_SORT].move(40.0, 300.0);
+    buttons[BUTTON_START_SORT].setOnPress(setStartSort);
 }
 
 void WinManager::processMouseKeyPress() noexcept {
@@ -57,7 +97,7 @@ bool WinManager::run() noexcept {
             }
         }
 
-        window.clear(sf::Color::Red);
+        window.clear(sf::Color(120,120,120));
         for (int i = 0; i < NBUTTONS; i++)
             window.draw(buttons[i]);
         window.display();
