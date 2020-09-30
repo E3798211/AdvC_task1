@@ -2,6 +2,10 @@
 #include <algorithm>
 #include "plot.h"
 
+void Plot::setLabel(const sf::Text &lbl) noexcept {
+    label = lbl;
+}
+
 /* Returns already rounded to int */
 static inline int norm_to(int xmax, int x, float lowbound, float highbound) {
     return xmax * (x - lowbound) / (highbound - lowbound);

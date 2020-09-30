@@ -170,6 +170,7 @@ WinManager::WinManager(int width, int height, const std::string &name)
         return;
     }
 
+    /* Explicit manual placing of all the objects */
     buttons[BUTTON_SET_BUBBLESORT].setText("Bubblesort", font);
     buttons[BUTTON_SET_BUBBLESORT].move(40.0, 50.0);
     buttons[BUTTON_SET_BUBBLESORT].setOnPress(setBubblesort);
@@ -200,6 +201,15 @@ WinManager::WinManager(int width, int height, const std::string &name)
 
     assignments.move(230.0, 50.0);
     comparisons.move(500.0, 50.0);
+
+    sf::Text plot_label;
+    plot_label.setFont(font);
+    plot_label.setCharacterSize(15);
+
+    plot_label.setString("Comparisons");
+    comparisons.setLabel(plot_label);
+    plot_label.setString("Assignments");
+    assignments.setLabel(plot_label);
 
     status.setFont(font);
     status.setCharacterSize(20);
