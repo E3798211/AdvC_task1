@@ -44,6 +44,8 @@ void WinManager::setStartSort(WinManager *wm) noexcept {
 
 WinManager::WinManager(int width, int height, const std::string &name)
     : window(sf::VideoMode(width, height), name)
+    , assignments   (sf::Vector2u(250, 500))
+    , comparisons   (sf::Vector2u(250, 500))
 {
     // TODO: fix error recovery
     if (!font.loadFromFile("UbuntuMono-B.ttf")) {
@@ -74,6 +76,9 @@ WinManager::WinManager(int width, int height, const std::string &name)
     buttons[BUTTON_START_SORT].setText("Start", font);
     buttons[BUTTON_START_SORT].move(40.0, 300.0);
     buttons[BUTTON_START_SORT].setOnPress(setStartSort);
+
+    assignments.move(230.0, 50.0);
+    comparisons.move(500.0, 50.0);
 }
 
 void WinManager::processMouseKeyPress() noexcept {
@@ -100,6 +105,8 @@ bool WinManager::run() noexcept {
         window.clear(sf::Color(120,120,120));
         for (int i = 0; i < NBUTTONS; i++)
             window.draw(buttons[i]);
+        window.draw(assignments);
+        window.draw(comparisons);
         window.display();
     }
     return false;

@@ -8,6 +8,7 @@
 #include "button.h"
 #include "sort.hpp"
 #include "counting_int.h"
+#include "plot.h"
 
 class WinManager
 {
@@ -15,6 +16,7 @@ private:
     sf::RenderWindow window;
     sf::Font font;
 
+    /* Drawable objects */
     enum
     {
         BUTTON_SET_BUBBLESORT,
@@ -30,11 +32,11 @@ private:
     };
     Button buttons[NBUTTONS];
 
+    Plot assignments;
+    Plot comparisons;
+
+    /* Non-drawble, implement inner logic */
     sorts::sort_t<CountingInt> sort;
-
-
-    void processMouseKeyPress() noexcept;
-
 
     /* Button callbacks */
     static void setBubblesort(WinManager *wm) noexcept;
@@ -43,6 +45,10 @@ private:
     static void setFillDescending(WinManager *wm) noexcept;
     static void setFillRandom(WinManager *wm) noexcept;
     static void setStartSort(WinManager *wm) noexcept;
+
+    /* Helpers */
+    void processMouseKeyPress() noexcept;
+
 public:
     explicit WinManager(int width, int height, const std::string &name);
 
